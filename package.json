@@ -1,0 +1,50 @@
+{
+  "name": "shuttle-monorepo",
+  "version": "0.0.0",
+  "repository": "https://github.com/SuperFlyTV/shuttle",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "lerna run build --stream",
+    "build:core": "yarn build --scope=@shuttle-lib/core",
+    "lint:raw": "lerna exec --stream -- eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist",
+    "lint": "yarn lint:raw .",
+    "lintfix": "yarn lint --fix",
+    "test": "lerna run test --stream",
+    "typecheck": "lerna exec -- tsc --noEmit",
+    "cov": "jest --coverage; 0 coverage/lcov-report/index.html",
+    "cov-open": "open-cli coverage/lcov-report/index.html",
+    "send-coverage": "jest && codecov",
+    "release:bump-release": "lerna version --exact --conventional-commits --conventional-graduate --no-push",
+    "release:bump-prerelease": "lerna version --exact --conventional-commits --conventional-prerelease --no-push",
+    "lerna:version": "lerna version --exact",
+    "lerna:publish": "lerna publish",
+    "lerna": "lerna"
+  },
+  "devDependencies": {
+    "@sofie-automation/code-standard-preset": "^2.5.2",
+    "@types/jest": "^29.5.12",
+    "cross-env": "^7.0.3",
+    "jest": "^29.7.0",
+    "lerna": "^8.1.2",
+    "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.2",
+    "typescript": "~5.3",
+    "webpack": "^5.90.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.2"
+  },
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
+  "lint-staged": {
+    "*.{js,css,json,md,scss}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "yarn lint --fix"
+    ]
+  },
+  "author": "Johan Nyman <johan@nytamin.se>",
+  "license": "MIT"
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE >
+<html lang="en">
+	<head>
+		<title>Shuttle WebHID demo</title>
+	</head>
+
+	<body>
+		<h1>Shuttle WebHID demo</h1>
+
+		<p>
+			This is a demo of the
+			<a href="https://www.npmjs.com/package/shuttle-webhid">shuttle-webhid</a> library.<br />
+			Source code for this demo is available
+			<a href="https://github.com/nytamin/contour-shuttle/blob/master/packages/webhid-demo/src/app.ts">here</a>.
+		</p>
+		<h3>Getting started</h3>
+		<p>Requirements:</p>
+		<ul>
+			<li>Chrome &gt; 89 (enabled by default)</li>
+			<li>
+				Chrome &lt; 89: Go to <b>chrome://flags</b> and enable "Experimental Web Platform features", then restart your
+				browser
+			</li>
+		</ul>
+		<p>
+			<i
+				>Note: For linux, you need to ensure udev is setup with the correct device permissions for the hidraw driver.</i
+			>
+		</p>
+		<p>
+			<button href="#" id="consent-button">Select device</button>
+		</p>
+		<p>
+			<button href="#" id="close-button">Close device</button>
+		</p>
+
+		<div id="log" style="white-space: pre; background: #ffffff; border: 1px solid grey; font-family: monospace"></div>
+
+		<script src="app.js" type="text/javascript"></script>
+	</body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "name": "@shuttle-lib/core",
+  "version": "0.0.0",
+  "description": "NPM package to interact with the Shuttle devices",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "license": "MIT",
+  "homepage": "https://github.com/nytamin/contour-shuttle",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nytamin/contour-shuttle.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nytamin/contour-shuttle/issues"
+  },
+  "author": {
+    "name": "Johan Nyman",
+    "email": "johan@nytamin.se",
+    "url": "https://github.com/nytamin"
+  },
+  "scripts": {
+    "build": "rimraf dist && yarn build:main",
+    "build:main": "tsc -p tsconfig.build.json",
+    "test": "jest"
+  },
+  "files": [
+    "dist/**"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
+  "keywords": [
+    "shuttle",
+    "Shuttle",
+    "hid",
+    "usb",
+    "hardware",
+    "interface",
+    "controller"
+  ],
+  "dependencies": {
+    "tslib": "^2.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "shuttle-webhid",
+  "version": "0.0.0",
+  "description": "An npm module for interfacing with the Contour Shuttle devices in Node.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "license": "MIT",
+  "homepage": "https://github.com/nytamin/contour-shuttle",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nytamin/contour-shuttle.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nytamin/contour-shuttle/issues"
+  },
+  "author": {
+    "name": "Johan Nyman",
+    "email": "johan@nytamin.se",
+    "url": "https://github.com/nytamin"
+  },
+  "scripts": {
+    "build": "rimraf dist && yarn build:main",
+    "build:main": "tsc -p tsconfig.build.json"
+  },
+  "files": [
+    "dist/**"
+  ],
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
+  "keywords": [
+    "webhid",
+    "usb",
+    "hardware",
+    "interface",
+    "controller",
+    "shuttle",
+    "contour",
+    "xPress",
+    "shuttlePro",
+    "controller Pro",
+    "contour controller pro"
+  ],
+  "dependencies": {
+    "@shuttle-lib/core": "0.0.0",
+    "@types/w3c-web-hid": "^1.0.3",
+    "buffer": "^6.0.3",
+    "p-queue": "^6.6.2"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
