@@ -217,13 +217,13 @@ shuttle.on('jog', (delta, value) => {
 })
 ```
 
-| Event            | Description                                                                                                   |
-| ---------------- | ------------------------------------------------------------------------------------------------------------- |
-| `"error"`        | Triggered on error.<br>Emitted with `(error)`.                                                                |
-| `"disconnected"` | Triggered when device is disconnected.                                                                        |
-| `"rotate"`       | Triggered when the mouse is rotated.<br>Emitted with `(rotation: {pitch: number, roll: number, yaw: number})` |
-| `"translate"`    | Triggered when the mouse is moved.<br>Emitted with `(translation: {x: number, y: number, z: number})`         |
-| `"down"`, `"up"` | Triggered when a button is pressed / released.<br>Emitted with `(buttonIndex: number)`                        |
+| Event            | Description                                                                                                                                                                                                    |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `"error"`        | Triggered on error.<br>Emitted with `(error)`.                                                                                                                                                                 |
+| `"disconnected"` | Triggered when device is disconnected.                                                                                                                                                                         |
+| `"jog"`          | Triggered when the jog wheel is rotated.<br>Emitted with `(delta: number, jogValue: number)`<br />`delta`: Value difference from last emitted event (usually -1 or 1)<br />`jogValue`: Jog value, range: 0-255 |
+| `"shuttle"`      | Triggered when the shuttle wheel is rotated.<br>Emitted with `(value: number)`<br />`value`: Shuttle value. Range: -1 - 7                                                                                      |
+| `"down"`, `"up"` | Triggered when a button is pressed / released.<br>Emitted with `(buttonIndex: number)`                                                                                                                         |
 
 #### Other functionality
 
@@ -237,7 +237,7 @@ This is a mono-repo, using [Lerna](https://github.com/lerna/lerna) and [Yarn](ht
 
 This repo is using [Yarn](https://yarnpkg.com). If you don't want to use it, replace `yarn xyz` with `npm run xyz` below.
 
-To install Yarn, just run `npm install -g yarn`.
+To enable Yarn in Node.js, run `corepack enable`.
 
 ### Setting up the repo
 
