@@ -10,8 +10,16 @@ export interface ShuttleEvents {
 	disconnected: () => void
 	error: (err: any) => void
 
-	shuttle: (shuttle: number) => void
-	jog: (delta: number, jogValue: number) => void
+	shuttle: (
+		/** Shuttle value. Range: [-1 - 7] */
+		shuttle: number
+	) => void
+	jog: (
+		/** Value difference from last emitted event  */
+		delta: number,
+		/** Jog value, range: 0-255 */
+		jogValue: number
+	) => void
 
 	down: (buttonIndex: number) => void
 	up: (buttonIndex: number) => void

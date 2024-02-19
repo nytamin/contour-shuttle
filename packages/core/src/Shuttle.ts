@@ -47,7 +47,7 @@ export class Shuttle extends EventEmitter {
 		}
 		const found = findProduct()
 
-		for (let i = 0; i < found.product.buttonCount; i++) {
+		for (let i = 0; i < found.product.buttonBits.length; i++) {
 			if (!this._buttonStates.has(i)) this._buttonStates.set(i, false)
 		}
 
@@ -70,11 +70,12 @@ export class Shuttle extends EventEmitter {
 				this.emit('jog', delta, jog)
 			}
 			const buttons = data.readUInt16LE(3)
-			for (let i = 0; i < found.product.buttonCount; i++) {
-				const button = Boolean(getBit(buttons, i))
+			for (let i = 0; i < found.product.buttonBits.length; i++) {
+				const button = Boolean(getBit(buttons, found.product.buttonBits[i]))
 
 				if (button !== this._buttonStates.get(i)) {
 					this._buttonStates.set(i, button)
+
 					if (button) this.emit('down', i)
 					else this.emit('up', i)
 				}

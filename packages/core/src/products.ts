@@ -10,7 +10,8 @@ export interface Product {
 	vendorId: number
 	productId: number
 
-	buttonCount: number
+	/** Which bit corresponds to a button */
+	buttonBits: number[]
 }
 
 export const PRODUCTS: { [name: string]: Product } = {
@@ -18,18 +19,18 @@ export const PRODUCTS: { [name: string]: Product } = {
 		name: 'ShuttlePro v1',
 		vendorId: VENDOR_IDS[0],
 		productId: 0x0010,
-		buttonCount: 13,
+		buttonBits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 	},
 	shuttlexpress: {
 		name: 'ShuttleXpress',
 		vendorId: VENDOR_IDS[0],
 		productId: 0x0020,
-		buttonCount: 5,
+		buttonBits: [4, 5, 6, 7, 8],
 	},
 	shuttlepro_v2: {
 		name: 'ShuttlePro v2',
 		vendorId: VENDOR_IDS[0],
 		productId: 0x0030,
-		buttonCount: 15,
+		buttonBits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
 	},
 }
