@@ -46,7 +46,7 @@ export class WebHIDDevice extends EventEmitter implements CoreHIDDevice {
 	}
 
 	private _handleInputReport(event: HIDInputReportEvent) {
-		const buf = WebBuffer.concat([WebBuffer.from([event.reportId]), WebBuffer.from(event.data.buffer)])
+		const buf = WebBuffer.from(event.data.buffer)
 		this.emit('data', buf)
 	}
 	private _handleError(error: any) {

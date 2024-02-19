@@ -29,10 +29,10 @@ async function openDevice(device: HIDDevice): Promise<void> {
 		appendLog(`Button ${keyIndex} up`)
 	})
 	shuttle.on('jog', (delta, value) => {
-		console.log(`jog ${delta} ${value}`)
+		appendLog(`jog ${delta} ${value}`)
 	})
 	shuttle.on('shuttle', (value) => {
-		console.log(`shuttle ${value}`)
+		appendLog(`shuttle ${value}`)
 	})
 }
 
