@@ -89,8 +89,8 @@ jobs:
     continue-on-error: false
     timeout-minutes: 15
 
-    # only run on master
-    if: github.ref == 'refs/heads/master'
+    # only run on master/main branch
+    if: github.ref == 'refs/heads/main'
 
     needs:
       - lint
