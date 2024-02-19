@@ -1,6 +1,6 @@
 {
   "name": "@shuttle-lib/webhid-demo",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "license": "MIT",
   "homepage": "https://github.com/nytamin/contour-shuttle#readme",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "buffer": "^6.0.3",
-    "shuttle-webhid": "0.0.0"
+    "shuttle-webhid": "0.0.1"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^7.0.0",
