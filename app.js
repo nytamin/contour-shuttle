@@ -3951,11 +3951,11 @@ __exportStar(__webpack_require__(263), exports);
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.setupShuttle = exports.getOpenedSpaceMice = exports.requestSpaceMice = void 0;
+exports.setupShuttle = exports.getOpenedDevices = exports.requestAccess = void 0;
 const core_1 = __webpack_require__(601);
 const web_hid_wrapper_1 = __webpack_require__(617);
 /** Prompts the user for which Shuttle device to select */
-async function requestSpaceMice() {
+async function requestAccess() {
     return navigator.hid.requestDevice({
         filters: Object.values(core_1.PRODUCTS).map((product) => ({
             vendorId: product.vendorId,
@@ -3963,15 +3963,15 @@ async function requestSpaceMice() {
         })),
     });
 }
-exports.requestSpaceMice = requestSpaceMice;
+exports.requestAccess = requestAccess;
 /**
  * Reopen previously selected devices.
  * The browser remembers what the user previously allowed your site to access, and this will open those without the request dialog
  */
-async function getOpenedSpaceMice() {
+async function getOpenedDevices() {
     return await navigator.hid.getDevices();
 }
-exports.getOpenedSpaceMice = getOpenedSpaceMice;
+exports.getOpenedDevices = getOpenedDevices;
 /** Sets up a connection to a HID device (the Shuttle device) */
 async function setupShuttle(browserDevice) {
     var _a;
@@ -4130,7 +4130,7 @@ async function openDevice(device) {
 window.addEventListener('load', () => {
     appendLog('Page loaded');
     // Attempt to open a previously selected device:
-    (0, shuttle_webhid_1.getOpenedSpaceMice)()
+    (0, shuttle_webhid_1.getOpenedDevices)()
         .then((devices) => {
         if (devices.length > 0) {
             appendLog(`"${devices[0].productName}" already granted in a previous session`);
@@ -4152,7 +4152,7 @@ consentButton === null || consentButton === void 0 ? void 0 : consentButton.addE
     }
     // Prompt for a device
     appendLog('Asking user for permissions...');
-    (0, shuttle_webhid_1.requestSpaceMice)()
+    (0, shuttle_webhid_1.requestAccess)()
         .then((devices) => {
         if (devices.length === 0) {
             appendLog('No device was selected');
