@@ -2,7 +2,7 @@ import { Shuttle, PRODUCTS, Product } from '@shuttle-lib/core'
 import { WebHIDDevice } from './web-hid-wrapper'
 
 /** Prompts the user for which Shuttle device to select */
-export async function requestSpaceMice(): Promise<HIDDevice[]> {
+export async function requestAccess(): Promise<HIDDevice[]> {
 	return navigator.hid.requestDevice({
 		filters: Object.values<Product>(PRODUCTS).map((product) => ({
 			vendorId: product.vendorId,
@@ -14,7 +14,7 @@ export async function requestSpaceMice(): Promise<HIDDevice[]> {
  * Reopen previously selected devices.
  * The browser remembers what the user previously allowed your site to access, and this will open those without the request dialog
  */
-export async function getOpenedSpaceMice(): Promise<HIDDevice[]> {
+export async function getOpenedDevices(): Promise<HIDDevice[]> {
 	return await navigator.hid.getDevices()
 }
 

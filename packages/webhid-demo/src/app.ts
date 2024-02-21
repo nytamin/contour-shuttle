@@ -1,4 +1,4 @@
-import { getOpenedSpaceMice, requestSpaceMice, setupShuttle, Shuttle } from 'shuttle-webhid'
+import { getOpenedDevices, requestAccess, setupShuttle, Shuttle } from 'shuttle-webhid'
 
 function appendLog(str: string) {
 	const logElm = document.getElementById('log')
@@ -39,7 +39,7 @@ async function openDevice(device: HIDDevice): Promise<void> {
 window.addEventListener('load', () => {
 	appendLog('Page loaded')
 	// Attempt to open a previously selected device:
-	getOpenedSpaceMice()
+	getOpenedDevices()
 		.then((devices) => {
 			if (devices.length > 0) {
 				appendLog(`"${devices[0].productName}" already granted in a previous session`)
@@ -63,7 +63,7 @@ consentButton?.addEventListener('click', () => {
 	// Prompt for a device
 
 	appendLog('Asking user for permissions...')
-	requestSpaceMice()
+	requestAccess()
 		.then((devices) => {
 			if (devices.length === 0) {
 				appendLog('No device was selected')

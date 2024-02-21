@@ -2,7 +2,7 @@ const { ShuttleWatcher } = require('shuttle-node')
 
 /*
 	This example connects to any connected Shuttle devices and logs
-	whenever the mouse is moved or a button is pressed.
+	whenever the jog/shuttle is moved or a button is pressed.
 */
 
 // Set up the watcher for Shuttle:

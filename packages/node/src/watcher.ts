@@ -59,8 +59,8 @@ export class ShuttleWatcher extends EventEmitter {
 	private shouldFindChangedReTries = 0
 
 	public debug = false
-	/** A list of the devices we've called setupSpaceMice for */
-	private setupSpaceMice: Shuttle[] = []
+	/** A list of the devices we've called setupShuttles for */
+	private setupDevices: Shuttle[] = []
 	private pollingInterval: NodeJS.Timeout | undefined = undefined
 
 	constructor(private options?: ShuttleWatcherOptions) {
@@ -101,7 +101,7 @@ export class ShuttleWatcher extends EventEmitter {
 			// In order for an application to close gracefully,
 			// we need to close all devices that we've called setupShuttle() on:
 			const ps: Promise<void>[] = []
-			for (const shuttle of this.setupSpaceMice) {
+			for (const shuttle of this.setupDevices) {
 				ps.push(shuttle.close())
 			}
 			await Promise.all(ps)
@@ -216,7 +216,7 @@ export class ShuttleWatcher extends EventEmitter {
 
 		setupShuttle(devicePath)
 			.then(async (shuttle: Shuttle) => {
-				this.setupSpaceMice.push(shuttle)
+				this.setupDevices.push(shuttle)
 				// Since this is async, check if the device is still connected
 				if (this.seenDevicePaths[devicePath]) {
 					// yes, it is still connected
