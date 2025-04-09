@@ -4,7 +4,6 @@
 import { HIDDevice as CoreHIDDevice, HIDEvents } from '@shuttle-lib/core'
 import { EventEmitter } from 'eventemitter3'
 import Queue from 'p-queue'
-import { Buffer as WebBuffer } from 'buffer'
 
 /**
  * The wrapped browser HIDDevice.
@@ -48,7 +47,7 @@ export class WebHIDDevice extends EventEmitter<HIDEvents> implements CoreHIDDevi
 	}
 
 	private _handleInputReport(event: HIDInputReportEvent) {
-		const buf = WebBuffer.from(event.data.buffer)
+		const buf = new Uint8Array(event.data.buffer)
 		this.emit('data', buf)
 	}
 	private _handleError(error: any) {

@@ -1,7 +1,7 @@
 import { EventEmitter } from 'eventemitter3'
 import { ButtonStates, ShuttleEvents, ShuttleInfo } from './api.js'
 import { Product, PRODUCTS, VENDOR_IDS } from './products.js'
-import { getBit, literal } from './lib.js'
+import { getBit, literal, uint8ArrayToDataView } from './lib.js'
 import { HIDDevice } from './genericHIDDevice.js'
 
 export class Shuttle extends EventEmitter<ShuttleEvents> {
@@ -50,14 +50,16 @@ export class Shuttle extends EventEmitter<ShuttleEvents> {
 			if (!this._buttonStates.has(i)) this._buttonStates.set(i, false)
 		}
 
-		this._device.on('data', (data: Buffer) => {
-			const shuttle = data.readInt8(0)
+		this._device.on('data', (data: Uint8Array) => {
+			const dataView = uint8ArrayToDataView(data)
+
+			const shuttle = dataView.getInt8(0)
 			if (shuttle !== this._shuttleState) {
 				this._shuttleState = shuttle
 				this.emit('shuttle', shuttle)
 			}
 
-			const jog = data.readUint8(1)
+			const jog = dataView.getUint8(1)
 			if (jog !== this._jogState) {
 				let delta: number = jog - this._jogState
 				if (this._jogState > 250 && jog < 5) {
@@ -68,7 +70,7 @@ export class Shuttle extends EventEmitter<ShuttleEvents> {
 				this._jogState = jog
 				this.emit('jog', delta, jog)
 			}
-			const buttons = data.readUInt16LE(3)
+			const buttons = dataView.getUint16(3, true)
 			for (let i = 0; i < found.product.buttonBits.length; i++) {
 				const button = Boolean(getBit(buttons, found.product.buttonBits[i]))
 
