@@ -12,5 +12,5 @@ export interface HIDDevice extends EventEmitter<HIDEvents> {
 
 export interface HIDEvents {
 	error: [err: any]
-	data: [data: Buffer]
+	data: [data: Uint8Array]
 }
