@@ -11,7 +11,7 @@ export interface ShuttleEvents {
 	error: [err: any]
 
 	shuttle: [
-		/** Shuttle value. Range: -1 - 7 */
+		/** Shuttle value. Range: -7 - 7 */
 		shuttle: number,
 	]
 	jog: [
