@@ -27,7 +27,7 @@
     "dist/**"
   ],
   "engines": {
-    "node": ">=14"
+    "node": ">=20"
   },
   "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "keywords": [
