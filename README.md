@@ -53,13 +53,6 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="0b33", MODE:="666", GROUP="plugdev"
 KERNEL=="hidraw*", ATTRS{idVendor}=="0b33", MODE="0666", GROUP="plugdev"
 ```
 
-Note: If you need more than 4 devices simultaneously, you might also have to set your env-var [UV_THREADPOOL_SIZE](http://docs.libuv.org/en/v1.x/threadpool.html):
-
-```javascript
-var { env } = require('process')
-env.UV_THREADPOOL_SIZE = 8 // Allow up to 8 devices
-```
-
 ## Getting started - Node.js
 
 ### Watch for connected Contour devices (recommended)
