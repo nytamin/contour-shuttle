@@ -1,5 +1,5 @@
 import type { usb } from 'usb'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import { Shuttle } from '@shuttle-lib/core'
 import { isAShuttleDevice, listAllConnectedDevices, setupShuttle } from './methods'
 
@@ -34,19 +34,15 @@ Possible solutions are:
 export interface ShuttleWatcherEvents {
 	// Note: This interface defines strong typings for any events that are emitted by the ShuttleWatcher class.
 
-	connected: (shuttle: Shuttle) => void
-	error: (err: any) => void
+	connected: [shuttle: Shuttle]
+	error: [err: any]
 }
 
-export declare interface ShuttleWatcher {
-	on<U extends keyof ShuttleWatcherEvents>(event: U, listener: ShuttleWatcherEvents[U]): this
-	emit<U extends keyof ShuttleWatcherEvents>(event: U, ...args: Parameters<ShuttleWatcherEvents[U]>): boolean
-}
 /**
  * Set up a watcher for newly connected Shuttle devices.
  * Note: It is highly recommended to set up a listener for the disconnected event on the Shuttle device, to clean up after a disconnected device.
  */
-export class ShuttleWatcher extends EventEmitter {
+export class ShuttleWatcher extends EventEmitter<ShuttleWatcherEvents> {
 	private seenDevicePaths: {
 		[devicePath: string]: {
 			shuttle?: Shuttle

@@ -1,15 +1,10 @@
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import { ButtonStates, ShuttleEvents, ShuttleInfo } from './api'
 import { Product, PRODUCTS, VENDOR_IDS } from './products'
 import { getBit, literal } from './lib'
 import { HIDDevice } from './genericHIDDevice'
 
-export declare interface Shuttle {
-	on<U extends keyof ShuttleEvents>(event: U, listener: ShuttleEvents[U]): this
-	emit<U extends keyof ShuttleEvents>(event: U, ...args: Parameters<ShuttleEvents[U]>): boolean
-}
-
-export class Shuttle extends EventEmitter {
+export class Shuttle extends EventEmitter<ShuttleEvents> {
 	private product: Product & { productId: number; interface: number }
 
 	private _buttonStates: Map<number, boolean> = new Map()

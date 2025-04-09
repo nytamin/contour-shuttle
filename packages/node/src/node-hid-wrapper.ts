@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { HIDDevice } from '@shuttle-lib/core'
-import { EventEmitter } from 'events'
+import { HIDDevice, HIDEvents } from '@shuttle-lib/core'
+import { EventEmitter } from 'eventemitter3'
 import * as HID from 'node-hid'
 
 /**
  * This class wraps the node-hid.HID Device.
  * This translates it into the common format (@see HIDDevice) defined by @shuttle-lib/core
  */
-export class NodeHIDDevice extends EventEmitter implements HIDDevice {
+export class NodeHIDDevice extends EventEmitter<HIDEvents> implements HIDDevice {
 	constructor(private device: HID.HID) {
 		super()
 		this._handleData = this._handleData.bind(this)

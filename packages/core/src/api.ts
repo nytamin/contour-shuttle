@@ -7,22 +7,22 @@ export type ButtonStates = Map<number, boolean>
 export interface ShuttleEvents {
 	// Note: This interface defines strong typings for any events that are emitted by the Shuttle class.
 
-	disconnected: () => void
-	error: (err: any) => void
+	disconnected: []
+	error: [err: any]
 
-	shuttle: (
+	shuttle: [
 		/** Shuttle value. Range: -1 - 7 */
 		shuttle: number
-	) => void
-	jog: (
+	]
+	jog: [
 		/** Value difference from last emitted event  */
 		delta: number,
 		/** Jog value, range: 0-255 */
 		jogValue: number
-	) => void
+	]
 
-	down: (buttonIndex: number) => void
-	up: (buttonIndex: number) => void
+	down: [buttonIndex: number]
+	up: [buttonIndex: number]
 }
 export interface ShuttleInfo {
 	/** Name of the device */

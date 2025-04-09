@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { HIDDevice as CoreHIDDevice } from '@shuttle-lib/core'
-import { EventEmitter } from 'events'
+import { HIDDevice as CoreHIDDevice, HIDEvents } from '@shuttle-lib/core'
+import { EventEmitter } from 'eventemitter3'
 import Queue from 'p-queue'
 import { Buffer as WebBuffer } from 'buffer'
 
@@ -8,7 +8,7 @@ import { Buffer as WebBuffer } from 'buffer'
  * The wrapped browser HIDDevice.
  * This translates it into the common format (@see CoreHIDDevice) defined by @shuttle-lib/core
  */
-export class WebHIDDevice extends EventEmitter implements CoreHIDDevice {
+export class WebHIDDevice extends EventEmitter<HIDEvents> implements CoreHIDDevice {
 	private readonly device: HIDDevice
 
 	private readonly reportQueue = new Queue({ concurrency: 1 })

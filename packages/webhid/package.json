@@ -43,6 +43,7 @@
     "@shuttle-lib/core": "0.0.2",
     "@types/w3c-web-hid": "^1.0.6",
     "buffer": "^6.0.3",
+    "eventemitter3": "^5.0.1",
     "p-queue": "^6.6.2"
   },
   "engines": {

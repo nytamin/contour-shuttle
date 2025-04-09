@@ -1,4 +1,5 @@
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
+import { ShuttleEvents } from '@shuttle-lib/core'
 
 export interface Device {
 	vendorId: number
@@ -27,7 +28,7 @@ export function resetMockHIDDevices(): HID[] {
 }
 
 // export class HID extends EventEmitter {
-export class HID extends EventEmitter {
+export class HID extends EventEmitter<ShuttleEvents> {
 	private mockWriteHandler
 
 	constructor(_path: string) {
