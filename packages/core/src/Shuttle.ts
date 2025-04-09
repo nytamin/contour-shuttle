@@ -1,8 +1,8 @@
 import { EventEmitter } from 'eventemitter3'
-import { ButtonStates, ShuttleEvents, ShuttleInfo } from './api'
-import { Product, PRODUCTS, VENDOR_IDS } from './products'
-import { getBit, literal } from './lib'
-import { HIDDevice } from './genericHIDDevice'
+import { ButtonStates, ShuttleEvents, ShuttleInfo } from './api.js'
+import { Product, PRODUCTS, VENDOR_IDS } from './products.js'
+import { getBit, literal } from './lib.js'
+import { HIDDevice } from './genericHIDDevice.js'
 
 export class Shuttle extends EventEmitter<ShuttleEvents> {
 	private product: Product & { productId: number; interface: number }
@@ -19,7 +19,11 @@ export class Shuttle extends EventEmitter<ShuttleEvents> {
 		return VENDOR_IDS
 	}
 
-	constructor(private _device: HIDDevice, private _deviceInfo: DeviceInfo, private _devicePath: string | undefined) {
+	constructor(
+		private _device: HIDDevice,
+		private _deviceInfo: DeviceInfo,
+		private _devicePath: string | undefined
+	) {
 		super()
 
 		this.product = this._setupDevice(_deviceInfo)

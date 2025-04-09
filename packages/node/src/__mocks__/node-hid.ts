@@ -15,7 +15,7 @@ export interface Device {
 }
 
 let mockWriteHandler: undefined | ((hid: HID, message: number[]) => void) = undefined
-export function setMockWriteHandler(handler: (hid: HID, message: number[]) => void) {
+export function setMockWriteHandler(handler: (hid: HID, message: number[]) => void): void {
 	mockWriteHandler = handler
 }
 

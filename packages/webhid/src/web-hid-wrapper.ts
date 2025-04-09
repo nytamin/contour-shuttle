@@ -1,3 +1,5 @@
+/* eslint-disable n/no-unsupported-features/node-builtins */
+
 /* eslint-disable @typescript-eslint/unbound-method */
 import { HIDDevice as CoreHIDDevice, HIDEvents } from '@shuttle-lib/core'
 import { EventEmitter } from 'eventemitter3'

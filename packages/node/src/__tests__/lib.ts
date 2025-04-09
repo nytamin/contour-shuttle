@@ -3,18 +3,16 @@ import * as HID from 'node-hid'
 /** Data sent to the panel */
 let sentData: string[] = []
 
-export function getSentData() {
+export function getSentData(): string[] {
 	return sentData
 }
 
-export function handleShuttleMessages(hid: HID.HID, message: number[]) {
+export function handleShuttleMessages(_hid: HID.HID, message: number[]): void {
 	// Replies to a few of the messages that are sent to the Shuttle
 
 	sentData.push(Buffer.from(message).toString('hex'))
 
-
 	throw new Error('Not implemented')
-
 
 	// if (reply) {
 	// 	const data = Buffer.alloc(128) // length?
@@ -24,11 +22,12 @@ export function handleShuttleMessages(hid: HID.HID, message: number[]) {
 	// 	hid.emit('data', data)
 	// }
 }
-export function resetSentData() {
+export function resetSentData(): void {
 	sentData = []
 }
 
 declare global {
+	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace jest {
 		interface Matchers<R> {
 			toBeObject(): R

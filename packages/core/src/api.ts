@@ -12,13 +12,13 @@ export interface ShuttleEvents {
 
 	shuttle: [
 		/** Shuttle value. Range: -1 - 7 */
-		shuttle: number
+		shuttle: number,
 	]
 	jog: [
 		/** Value difference from last emitted event  */
 		delta: number,
 		/** Jog value, range: 0-255 */
-		jogValue: number
+		jogValue: number,
 	]
 
 	down: [buttonIndex: number]
