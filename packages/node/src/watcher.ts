@@ -167,7 +167,8 @@ export class ShuttleWatcher extends EventEmitter<ShuttleWatcherEvents> {
 		// there isn't a good way to relate the output from usb to node-hid devices
 		// So we're just using the events to trigger a re-check for new devices and cache the seen devices
 
-		listAllConnectedDevices().forEach((shuttleDevice) => {
+		const hidList = await listAllConnectedDevices()
+		hidList.forEach((shuttleDevice) => {
 			if (shuttleDevice.path) {
 				pathMap[shuttleDevice.path] = true
 			} else {
