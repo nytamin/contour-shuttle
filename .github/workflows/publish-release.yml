@@ -26,6 +26,7 @@ jobs:
 
       - name: Prepare Environment
         run: |
+          corepack enable
           yarn
           yarn build
         env:
@@ -58,21 +59,9 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Prepare Environment
-        if: matrix.node_version != 10
         run: |
+          corepack enable
           yarn
-          yarn build
-        env:
-          CI: true
-      - name: Prepare Environment (Node 10)
-        if: matrix.node_version == 10
-        run: |
-          sudo apt-get update
-          sudo apt-get install libudev-dev
-
-          # yarn --prod
-
-          yarn --ignore-engines
           yarn build
         env:
           CI: true
@@ -113,6 +102,7 @@ jobs:
       - name: Prepare Environment
         if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: |
+          corepack enable
           yarn
         env:
           CI: true

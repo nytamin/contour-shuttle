@@ -30,6 +30,7 @@ jobs:
       - name: Prepare Environment
         if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: |
+          corepack enable
           yarn
         env:
           CI: true
