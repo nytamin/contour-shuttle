@@ -71,7 +71,7 @@ export async function setupShuttle(devicePathOrHIDDevice?: HID.Device | HID.HIDA
 	}
 
 	if (!deviceInfo) {
-		// Look through HID.devices(), bevause HID.Device contains the productId
+		// Look through HID.devices(), because HID.Device contains the productId
 		for (const hidDevice of HID.devices()) {
 			if (hidDevice.path === devicePath) {
 				deviceInfo = {

@@ -3,11 +3,16 @@ module.exports = {
 	projects: ['<rootDir>'],
 	preset: 'ts-jest',
 	moduleFileExtensions: ['js', 'ts'],
+	moduleNameMapper: {
+		'(.+).js$': '$1',
+	},
 	transform: {
 		'^.+\\.(ts|tsx)$': [
-			'ts-jest', {
+			'ts-jest',
+			{
 				tsconfig: 'tsconfig.json',
-			}],
+			},
+		],
 	},
 	testMatch: ['**/__tests__/**/*.spec.(ts|js)'],
 	testEnvironment: 'node',
