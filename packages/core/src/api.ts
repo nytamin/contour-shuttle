@@ -1,3 +1,5 @@
+import type { ProductModelId } from './products.js'
+
 /*
  * This file contains public type interfaces.
  * If changing these, consider whether it might be a breaking change.
@@ -25,6 +27,8 @@ export interface ShuttleEvents {
 	up: [buttonIndex: number]
 }
 export interface ShuttleInfo {
+	/** Id of the product */
+	productModelId: ProductModelId
 	/** Name of the device */
 	name: string
 

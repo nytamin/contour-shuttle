@@ -116,6 +116,7 @@ export class Shuttle extends EventEmitter<ShuttleEvents> {
 	public get info(): ShuttleInfo {
 		this.ensureInitialized()
 		return literal<ShuttleInfo>({
+			productModelId: this.product.productModelId,
 			name: this.product.name,
 
 			vendorId: this.product.vendorId,

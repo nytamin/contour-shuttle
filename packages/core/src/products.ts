@@ -4,8 +4,15 @@
 
 export const VENDOR_IDS = [0x0b33]
 
+export enum ProductModelId {
+	ShuttleProV1 = 'shuttlepro_v1',
+	ShuttleXpress = 'shuttlexpress',
+	ShuttleProV2 = 'shuttlepro_v2',
+}
+
 export interface Product {
 	/** Name / Identifier of the device */
+	productModelId: ProductModelId
 	name: string
 	vendorId: number
 	productId: number
@@ -14,20 +21,23 @@ export interface Product {
 	buttonBits: number[]
 }
 
-export const PRODUCTS: { [name: string]: Product } = {
-	shuttlepro_v1: {
+export const PRODUCTS: Record<ProductModelId, Product> = {
+	[ProductModelId.ShuttleProV1]: {
+		productModelId: ProductModelId.ShuttleProV1,
 		name: 'ShuttlePro v1',
 		vendorId: VENDOR_IDS[0],
 		productId: 0x0010,
 		buttonBits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 	},
-	shuttlexpress: {
+	[ProductModelId.ShuttleXpress]: {
+		productModelId: ProductModelId.ShuttleXpress,
 		name: 'ShuttleXpress',
 		vendorId: VENDOR_IDS[0],
 		productId: 0x0020,
 		buttonBits: [4, 5, 6, 7, 8],
 	},
-	shuttlepro_v2: {
+	[ProductModelId.ShuttleProV2]: {
+		productModelId: ProductModelId.ShuttleProV2,
 		name: 'ShuttlePro v2',
 		vendorId: VENDOR_IDS[0],
 		productId: 0x0030,
