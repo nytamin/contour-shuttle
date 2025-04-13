@@ -1,6 +1,6 @@
 {
   "name": "@shuttle-lib/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "NPM package to interact with the Shuttle devices",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
