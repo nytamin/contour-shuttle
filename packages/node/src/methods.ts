@@ -1,20 +1,20 @@
 import { Shuttle, PRODUCTS, VENDOR_IDS, Product } from '@shuttle-lib/core'
 import * as HID from 'node-hid'
 import type { usb } from 'usb'
-import { NodeHIDDevice } from './node-hid-wrapper'
+import { NodeHIDDevice } from './node-hid-wrapper.js'
 
-import { isHID_Device, isHID_HID } from './lib'
+import { isHID_Device, isHID_HID } from './lib.js'
 
-import { HID_Device } from './api'
+import { HID_Device } from './api.js'
 
 /** Sets up a connection to a HID device (the Shuttle device) */
 export function setupShuttle(): Promise<Shuttle>
 export function setupShuttle(HIDDevice: HID.Device): Promise<Shuttle>
-export function setupShuttle(HIDDevice: HID.HID): Promise<Shuttle>
+export function setupShuttle(HIDDevice: HID.HIDAsync): Promise<Shuttle>
 export function setupShuttle(devicePath: string): Promise<Shuttle>
-export async function setupShuttle(devicePathOrHIDDevice?: HID.Device | HID.HID | string): Promise<Shuttle> {
+export async function setupShuttle(devicePathOrHIDDevice?: HID.Device | HID.HIDAsync | string): Promise<Shuttle> {
 	let devicePath: string
-	let device: HID.HID
+	let device: HID.HIDAsync
 	let deviceInfo:
 		| {
 				product: string | undefined
@@ -26,13 +26,13 @@ export async function setupShuttle(devicePathOrHIDDevice?: HID.Device | HID.HID 
 
 	if (!devicePathOrHIDDevice) {
 		// Device not provided, will then select any connected device:
-		const connectedShuttle = listAllConnectedDevices()
+		const connectedShuttle = await listAllConnectedDevices()
 		if (!connectedShuttle.length) {
 			throw new Error('Could not find any connected Shuttle devices.')
 		}
 		// Just select the first one:
 		devicePath = connectedShuttle[0].path
-		device = new HID.HID(devicePath)
+		device = await HID.HIDAsync.open(devicePath)
 
 		deviceInfo = {
 			product: connectedShuttle[0].product,
@@ -46,7 +46,7 @@ export async function setupShuttle(devicePathOrHIDDevice?: HID.Device | HID.HID 
 		if (!devicePathOrHIDDevice.path) throw new Error('HID.Device path not set!')
 
 		devicePath = devicePathOrHIDDevice.path
-		device = new HID.HID(devicePath)
+		device = await HID.HIDAsync.open(devicePath)
 
 		deviceInfo = {
 			product: devicePathOrHIDDevice.product,
@@ -64,14 +64,14 @@ export async function setupShuttle(devicePathOrHIDDevice?: HID.Device | HID.HID 
 		// is string (path)
 
 		devicePath = devicePathOrHIDDevice
-		device = new HID.HID(devicePath)
+		device = await HID.HIDAsync.open(devicePath)
 		// deviceInfo is set later
 	} else {
 		throw new Error(`setupShuttle: invalid arguments: ${JSON.stringify(devicePathOrHIDDevice)}`)
 	}
 
 	if (!deviceInfo) {
-		// Look through HID.devices(), bevause HID.Device contains the productId
+		// Look through HID.devices(), because HID.Device contains the productId
 		for (const hidDevice of HID.devices()) {
 			if (hidDevice.path === devicePath) {
 				deviceInfo = {
@@ -99,8 +99,9 @@ export async function setupShuttle(devicePathOrHIDDevice?: HID.Device | HID.HID 
 	return shuttle
 }
 /** Returns a list of all connected Shuttle-HID-devices */
-export function listAllConnectedDevices(): HID_Device[] {
-	const connectedShuttle = HID.devices().filter((device) => {
+export async function listAllConnectedDevices(): Promise<HID_Device[]> {
+	const hidDevices = await HID.devicesAsync()
+	const connectedShuttle = hidDevices.filter((device) => {
 		// Filter to only return the supported devices:
 		return isAShuttleDevice(device)
 	})

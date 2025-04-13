@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { HIDDevice } from '@shuttle-lib/core'
-import { EventEmitter } from 'events'
+import { HIDDevice, HIDEvents } from '@shuttle-lib/core'
+import { EventEmitter } from 'eventemitter3'
 import * as HID from 'node-hid'
 
 /**
  * This class wraps the node-hid.HID Device.
  * This translates it into the common format (@see HIDDevice) defined by @shuttle-lib/core
  */
-export class NodeHIDDevice extends EventEmitter implements HIDDevice {
-	constructor(private device: HID.HID) {
+export class NodeHIDDevice extends EventEmitter<HIDEvents> implements HIDDevice {
+	constructor(private device: HID.HIDAsync) {
 		super()
 		this._handleData = this._handleData.bind(this)
 		this._handleError = this._handleError.bind(this)
@@ -18,11 +18,13 @@ export class NodeHIDDevice extends EventEmitter implements HIDDevice {
 	}
 
 	public write(data: number[]): void {
-		this.device.write(data)
+		this.device.write(data).catch((err) => {
+			this.emit('error', err)
+		})
 	}
 
 	public async close(): Promise<void> {
-		this.device.close()
+		await this.device.close()
 
 		// For some unknown reason, we need to wait a bit before returning because it
 		// appears that the HID-device isn't actually closed properly until after a short while.

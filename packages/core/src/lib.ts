@@ -11,3 +11,7 @@ export function literal<T>(o: T): T {
 export function getBit(integer: number, bitPosition: number): 0 | 1 {
 	return (integer & (1 << bitPosition)) === 0 ? 0 : 1
 }
+
+export function uint8ArrayToDataView(buffer: Uint8Array | Uint8ClampedArray): DataView {
+	return new DataView(buffer.buffer, buffer.byteOffset, buffer.byteLength)
+}

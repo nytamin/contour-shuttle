@@ -1,9 +1,9 @@
-import { PRODUCTS } from '@shuttle-lib/core'
+import { Product, PRODUCTS } from '@shuttle-lib/core'
 
 describe('products.ts', () => {
 	test('productIds should be unique', async () => {
 		const productIds = new Map<string, string>()
-		for (const product of Object.values(PRODUCTS)) {
+		for (const product of Object.values<Product>(PRODUCTS)) {
 			const productId: number = product.productId
 
 			const idPair = `${productId}`

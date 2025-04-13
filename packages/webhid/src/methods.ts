@@ -1,5 +1,7 @@
+/* eslint-disable n/no-unsupported-features/node-builtins */
+
 import { Shuttle, PRODUCTS, Product } from '@shuttle-lib/core'
-import { WebHIDDevice } from './web-hid-wrapper'
+import { WebHIDDevice } from './web-hid-wrapper.js'
 
 /** Prompts the user for which Shuttle device to select */
 export async function requestAccess(): Promise<HIDDevice[]> {

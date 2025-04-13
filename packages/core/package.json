@@ -27,7 +27,7 @@
     "dist/**"
   ],
   "engines": {
-    "node": ">=14"
+    "node": ">=20"
   },
   "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "keywords": [
@@ -40,7 +40,8 @@
     "controller"
   ],
   "dependencies": {
-    "tslib": "^2.4.0"
+    "eventemitter3": "^5.0.1",
+    "tslib": "^2.8.1"
   },
   "publishConfig": {
     "access": "public"

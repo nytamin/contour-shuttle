@@ -1,7 +1,7 @@
 import type { usb } from 'usb'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import { Shuttle } from '@shuttle-lib/core'
-import { isAShuttleDevice, listAllConnectedDevices, setupShuttle } from './methods'
+import { isAShuttleDevice, listAllConnectedDevices, setupShuttle } from './methods.js'
 
 let USBImport: typeof usb | undefined
 let hasTriedImport = false
@@ -13,40 +13,36 @@ function USBDetect(): typeof usb {
 	if (!hasTriedImport) {
 		hasTriedImport = true
 		try {
-			// eslint-disable-next-line @typescript-eslint/no-var-requires
+			// eslint-disable-next-line @typescript-eslint/no-require-imports
 			const usb: typeof import('usb') = require('usb')
 			USBImport = usb.usb
 			return USBImport
-		} catch (err) {
+		} catch (_err) {
 			// It's not installed
 		}
 	}
 	// else emit error:
-	throw `ShuttleWatcher requires the dependency "usb" to be installed when not polling.
+	throw new Error(`ShuttleWatcher requires the dependency "usb" to be installed when not polling.
 It might have been skipped due to your platform being unsupported (this is an issue with "usb", not the Shuttle library).
 Possible solutions are:
 * You can try to install the dependency manually, by running "npm install usb".
 * Use the fallback "usePolling" functionality instead: new ShuttleWatcher({ usePolling: true})
 * Otherwise you can still connect to Shuttle devices manually by using Shuttle.setupDevices().
-`
+`)
 }
 
 export interface ShuttleWatcherEvents {
 	// Note: This interface defines strong typings for any events that are emitted by the ShuttleWatcher class.
 
-	connected: (shuttle: Shuttle) => void
-	error: (err: any) => void
+	connected: [shuttle: Shuttle]
+	error: [err: any]
 }
 
-export declare interface ShuttleWatcher {
-	on<U extends keyof ShuttleWatcherEvents>(event: U, listener: ShuttleWatcherEvents[U]): this
-	emit<U extends keyof ShuttleWatcherEvents>(event: U, ...args: Parameters<ShuttleWatcherEvents[U]>): boolean
-}
 /**
  * Set up a watcher for newly connected Shuttle devices.
  * Note: It is highly recommended to set up a listener for the disconnected event on the Shuttle device, to clean up after a disconnected device.
  */
-export class ShuttleWatcher extends EventEmitter {
+export class ShuttleWatcher extends EventEmitter<ShuttleWatcherEvents> {
 	private seenDevicePaths: {
 		[devicePath: string]: {
 			shuttle?: Shuttle
@@ -171,7 +167,8 @@ export class ShuttleWatcher extends EventEmitter {
 		// there isn't a good way to relate the output from usb to node-hid devices
 		// So we're just using the events to trigger a re-check for new devices and cache the seen devices
 
-		listAllConnectedDevices().forEach((shuttleDevice) => {
+		const hidList = await listAllConnectedDevices()
+		hidList.forEach((shuttleDevice) => {
 			if (shuttleDevice.path) {
 				pathMap[shuttleDevice.path] = true
 			} else {

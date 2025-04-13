@@ -1,15 +1,10 @@
-import { EventEmitter } from 'events'
-import { ButtonStates, ShuttleEvents, ShuttleInfo } from './api'
-import { Product, PRODUCTS, VENDOR_IDS } from './products'
-import { getBit, literal } from './lib'
-import { HIDDevice } from './genericHIDDevice'
+import { EventEmitter } from 'eventemitter3'
+import { ButtonStates, ShuttleEvents, ShuttleInfo } from './api.js'
+import { Product, PRODUCTS, VENDOR_IDS } from './products.js'
+import { getBit, literal, uint8ArrayToDataView } from './lib.js'
+import { HIDDevice } from './genericHIDDevice.js'
 
-export declare interface Shuttle {
-	on<U extends keyof ShuttleEvents>(event: U, listener: ShuttleEvents[U]): this
-	emit<U extends keyof ShuttleEvents>(event: U, ...args: Parameters<ShuttleEvents[U]>): boolean
-}
-
-export class Shuttle extends EventEmitter {
+export class Shuttle extends EventEmitter<ShuttleEvents> {
 	private product: Product & { productId: number; interface: number }
 
 	private _buttonStates: Map<number, boolean> = new Map()
@@ -24,7 +19,11 @@ export class Shuttle extends EventEmitter {
 		return VENDOR_IDS
 	}
 
-	constructor(private _device: HIDDevice, private _deviceInfo: DeviceInfo, private _devicePath: string | undefined) {
+	constructor(
+		private _device: HIDDevice,
+		private _deviceInfo: DeviceInfo,
+		private _devicePath: string | undefined
+	) {
 		super()
 
 		this.product = this._setupDevice(_deviceInfo)
@@ -51,14 +50,16 @@ export class Shuttle extends EventEmitter {
 			if (!this._buttonStates.has(i)) this._buttonStates.set(i, false)
 		}
 
-		this._device.on('data', (data: Buffer) => {
-			const shuttle = data.readInt8(0)
+		this._device.on('data', (data: Uint8Array) => {
+			const dataView = uint8ArrayToDataView(data)
+
+			const shuttle = dataView.getInt8(0)
 			if (shuttle !== this._shuttleState) {
 				this._shuttleState = shuttle
 				this.emit('shuttle', shuttle)
 			}
 
-			const jog = data.readUint8(1)
+			const jog = dataView.getUint8(1)
 			if (jog !== this._jogState) {
 				let delta: number = jog - this._jogState
 				if (this._jogState > 250 && jog < 5) {
@@ -69,7 +70,7 @@ export class Shuttle extends EventEmitter {
 				this._jogState = jog
 				this.emit('jog', delta, jog)
 			}
-			const buttons = data.readUInt16LE(3)
+			const buttons = dataView.getUint16(3, true)
 			for (let i = 0; i < found.product.buttonBits.length; i++) {
 				const button = Boolean(getBit(buttons, found.product.buttonBits[i]))
 

@@ -40,7 +40,6 @@ watcher.on('connected', (shuttle) => {
 	shuttle.on('up', (keyIndex) => {
 		console.log('Button released', keyIndex)
 	})
-
 })
 
 // To stop watching, call

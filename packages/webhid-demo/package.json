@@ -21,11 +21,10 @@
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --progress"
   },
   "dependencies": {
-    "buffer": "^6.0.3",
     "shuttle-webhid": "0.0.2"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^7.0.0",
-    "ts-loader": "^8.3.0"
+    "ts-loader": "^9.5.2"
   }
 }
