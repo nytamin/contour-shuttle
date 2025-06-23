@@ -1,6 +1,6 @@
 {
   "name": "shuttle-node",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An npm module for interfacing with the Contour Shuttle devices in Node.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -43,7 +43,7 @@
     "contour controller pro"
   ],
   "dependencies": {
-    "@shuttle-lib/core": "0.1.1",
+    "@shuttle-lib/core": "0.1.2",
     "eventemitter3": "^5.0.1",
     "node-hid": "^3.1.2",
     "tslib": "^2.8.1"

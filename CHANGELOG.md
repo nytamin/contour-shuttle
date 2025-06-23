@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/SuperFlyTV/shuttle/compare/v0.1.1...v0.1.2) (2025-06-23)
+
+### Bug Fixes
+
+- fix: `productId` and `interface` returned in `device.info()` was wrong. ([PR #2](https://github.com/nytamin/contour-shuttle/pull/2))
+- add `interface` to products ([dfc1697](https://github.com/SuperFlyTV/shuttle/commit/dfc16973d3b3e06e29834fad7030e2436dd367b1))
+
 ## [0.1.1](https://github.com/SuperFlyTV/shuttle/compare/v0.1.0...v0.1.1) (2025-04-13)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "shuttle-webhid",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An npm module for interfacing with the Contour Shuttle devices in Node.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -40,7 +40,7 @@
     "contour controller pro"
   ],
   "dependencies": {
-    "@shuttle-lib/core": "0.1.1",
+    "@shuttle-lib/core": "0.1.2",
     "@types/w3c-web-hid": "^1.0.6",
     "eventemitter3": "^5.0.1"
   },
