@@ -16,6 +16,7 @@ export interface Product {
 	name: string
 	vendorId: number
 	productId: number
+	interface: number
 
 	/** Which bit corresponds to a button */
 	buttonBits: number[]
@@ -27,6 +28,7 @@ export const PRODUCTS: Record<ProductModelId, Product> = {
 		name: 'ShuttlePro v1',
 		vendorId: VENDOR_IDS[0],
 		productId: 0x0010,
+		interface: 0,
 		buttonBits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 	},
 	[ProductModelId.ShuttleXpress]: {
@@ -34,6 +36,7 @@ export const PRODUCTS: Record<ProductModelId, Product> = {
 		name: 'ShuttleXpress',
 		vendorId: VENDOR_IDS[0],
 		productId: 0x0020,
+		interface: 0,
 		buttonBits: [4, 5, 6, 7, 8],
 	},
 	[ProductModelId.ShuttleProV2]: {
@@ -41,6 +44,7 @@ export const PRODUCTS: Record<ProductModelId, Product> = {
 		name: 'ShuttlePro v2',
 		vendorId: VENDOR_IDS[0],
 		productId: 0x0030,
+		interface: 0,
 		buttonBits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
 	},
 }

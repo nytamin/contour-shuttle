@@ -5,7 +5,7 @@ import { getBit, literal, uint8ArrayToDataView } from './lib.js'
 import { HIDDevice } from './genericHIDDevice.js'
 
 export class Shuttle extends EventEmitter<ShuttleEvents> {
-	private product: Product & { productId: number; interface: number }
+	private product: Product
 
 	private _buttonStates: Map<number, boolean> = new Map()
 	private _shuttleState = 0
@@ -29,11 +29,16 @@ export class Shuttle extends EventEmitter<ShuttleEvents> {
 		this.product = this._setupDevice(_deviceInfo)
 	}
 	private _setupDevice(deviceInfo: DeviceInfo) {
-		const findProduct = (): { product: Product; productId: number; interface: number } => {
+		const findProduct = (): { product: Product; vendorId: number; productId: number; interface: number } => {
 			for (const product of Object.values<Product>(PRODUCTS)) {
-				if (product.vendorId === deviceInfo.vendorId && product.productId === deviceInfo.productId) {
+				if (
+					product.vendorId === deviceInfo.vendorId &&
+					product.productId === deviceInfo.productId &&
+					product.interface === deviceInfo.interface
+				) {
 					return {
 						product,
+						vendorId: deviceInfo.vendorId,
 						productId: deviceInfo.productId,
 						interface: deviceInfo.interface,
 					}
@@ -97,7 +102,7 @@ export class Shuttle extends EventEmitter<ShuttleEvents> {
 		return {
 			...found.product,
 			productId: found.productId,
-			interface: found.interface,
+			vendorId: found.vendorId,
 		}
 	}
 
