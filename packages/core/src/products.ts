@@ -1,7 +1,7 @@
 /*
  * This file contains information about the various Shuttle devices
  */
-
+// Note: This also includes 0x5f3 which is an OLD Contour Shuttle Pro v1 vendor id (really, an xkeys).
 export const VENDOR_IDS = [0x0b33, 0x5f3]
 
 export enum ProductModelId {
