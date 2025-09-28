@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/nytamin/contour-shuttle/compare/v0.1.1...v0.1.3) (2025-09-28)
+
+### Bug Fixes
+
+- add `interface` to products ([dfc1697](https://github.com/nytamin/contour-shuttle/commit/dfc16973d3b3e06e29834fad7030e2436dd367b1))
+
 ## [0.1.2](https://github.com/nytamin/contour-shuttle/compare/v0.1.1...v0.1.2) (2025-06-23)
 
 ### Bug Fixes
