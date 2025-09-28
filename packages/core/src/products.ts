@@ -2,7 +2,7 @@
  * This file contains information about the various Shuttle devices
  */
 
-export const VENDOR_IDS = [0x0b33, 0x5F3]
+export const VENDOR_IDS = [0x0b33, 0x5f3]
 
 export enum ProductModelId {
 	ShuttleProV1 = 'shuttlepro_v1',
@@ -32,7 +32,8 @@ export const PRODUCTS: Record<ProductModelId, Product> = {
 		interface: 0,
 		buttonBits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 	},
-	[ProductModelId.ShuttleProV1a]: { // S/N lower than 00100000
+	[ProductModelId.ShuttleProV1a]: {
+		// S/N lower than 00100000 ? Found in S/N 0005xxxx
 		productModelId: ProductModelId.ShuttleProV1,
 		name: 'ShuttlePro v1',
 		vendorId: VENDOR_IDS[1],
