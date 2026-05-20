@@ -34,13 +34,13 @@ export class Shuttle extends EventEmitter<ShuttleEvents> {
 				if (
 					product.vendorId === deviceInfo.vendorId &&
 					product.productId === deviceInfo.productId &&
-					product.interface === deviceInfo.interface
+					(deviceInfo.interface === null || product.interface === deviceInfo.interface)
 				) {
 					return {
 						product,
 						vendorId: deviceInfo.vendorId,
 						productId: deviceInfo.productId,
-						interface: deviceInfo.interface,
+						interface: product.interface,
 					}
 				}
 			}
