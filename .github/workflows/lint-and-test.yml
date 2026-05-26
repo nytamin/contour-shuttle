@@ -12,32 +12,76 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   lint:
-    name: Linting
+    name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Use Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Prepare Environment
+        run: |
+          corepack enable
+          yarn install --immutable
+          yarn build
+        env:
+          CI: true
+      - name: Run lint
+        run: |
+          yarn lint
+        env:
+          CI: true
+
+  test:
+    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: ['14', '16', '18', '20', '22', '24']
+        os: [ubuntu-latest] # [windows-latest, macOS-latest]
     timeout-minutes: 10
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: ${{ matrix.node_version }}
       - name: Cache node_modules
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Prepare Environment
+        if: matrix.node_version != 10
         run: |
-          corepack enable
-          yarn
+          yarn install --immutable
           yarn build
         env:
           CI: true
-      - name: Run Linting
+      - name: Prepare Environment (Node 10)
+        if: matrix.node_version == 10
         run: |
-          yarn lint
+          sudo apt-get update
+          sudo apt-get install libudev-dev
+
+          # yarn --prod
+
+          yarn --ignore-engines
+          yarn build
+        env:
+          CI: true
+
+      - name: Run unit tests
+        run: |
+          yarn test
         env:
           CI: true
 
@@ -48,47 +92,11 @@ jobs:
     name: Check for spelling errors
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           persist-credentials: false
       - uses: codespell-project/actions-codespell@master
         with:
           check_filenames: true
-          skip: './.git,./yarn.lock'
+          skip: "./.git,./yarn.lock"
           ignore_words_list: ans
-
-  test:
-    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        node_version: ['20', '22']
-        os: [ubuntu-latest] # [windows-latest, macOS-latest]
-    timeout-minutes: 10
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node_version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node_version }}
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Prepare Environment
-        run: |
-          corepack enable
-          yarn
-          yarn build
-        env:
-          CI: true
-
-      - name: Run unit tests
-        run: |
-          yarn test
-        env:
-          CI: true
