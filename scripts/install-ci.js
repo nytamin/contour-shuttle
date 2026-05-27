@@ -33,6 +33,7 @@ function run(command) {
 		delete packageJson.dependencies['node-hid']
 		await fsWriteFile(path, JSON.stringify(packageJson, null, 2))
 
+		await run('corepack enable')
 		await run('yarn install --ignore-optional')
 
 		// Restore:
