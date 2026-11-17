@@ -49,7 +49,7 @@ export class WebHIDDevice extends EventEmitter<HIDEvents> implements CoreHIDDevi
 	private _handleDisconnect(event: HIDConnectionEvent) {
 		if (event.device === this.device) {
 			this.emit('error', 'WebHID disconnected')
+			this._cleanup()
 		}
-		this._cleanup()
 	}
 }
